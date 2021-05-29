@@ -1,0 +1,111 @@
+<!-- Find the neighbours ver. 1.0, Mariosnb 2021 -->
+<!-- Final project: The flags of the world - Find the neighbours for Mathesis CS3.2: Advanced web development (https://mathesis.cup.gr/) -->
+<!-- Τελική εργασία: Οι σημαίες του κόσμου - Βρες τους γείτονες, Mathesis ΗΥ3.2 Προχωρημένα θέματα ανάπτυξης ιστοσελίδων (https://mathesis.cup.gr/) -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Βρες τους γείτονες</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <script src="js/countries.js" defer></script> <!-- countries.js has the rest code -->
+    <script>
+        var round = 1;
+        var score = 0;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            playGame();
+            //start a new Game
+
+            //event listener to new game button
+            document.querySelector("#btn-new-game").addEventListener("click", () => {
+                // ...
+                question(); 
+            })
+
+            //event listener to next round button
+            document.querySelector("#btn-next-round").addEventListener("click", () => {
+                document.querySelectorAll(".flg").forEach(el => el.remove());
+               
+                round++;
+                if(round>10)
+                endGame();
+                else
+                {
+                    gs.style.display = "none";
+                    nbp.style.pointerEvents = "auto";
+
+                    countries =
+                                [{
+                                    countryName:"",
+                                    borderNames:[],
+                                    borderCodes:[]
+                                }];
+                    nbCountryAll =
+                                {
+                                    names:[],
+                                    codes:[]
+                                };
+                    times = 1;
+                    times2 = 1;
+                    tmpCodes = [];
+                    prog.style.setProperty("--dynamic-width", '0%');
+                    prg = 0;
+                    document.querySelector(".button").disabled = true;
+                    document.querySelector(".button").style.color = "lightgrey";
+                    playGame();
+                }
+            })
+        });
+    </script>
+</head>
+
+<body>
+    <div class="game-panel">
+            <div id="sidebar">
+                <div class="title">
+                <div class="title-1">Βρες τους γείτονες</div>
+                <br>
+                <div class="info" style="opacity: 0.7;">Γύρος: <span class="round"></span></div>
+                <div class="info" style="opacity: 0.7;">Σκορ:&nbsp;&nbsp; <span class="score"></span></div>
+                <br>
+                </div>
+
+                <div class="bottom">
+                <div><input type="button" id="btn-next-round" class="button" value="Επόμενη χώρα" disabled></div>
+                <div><input type="button" id="btn-new-game" class="button2" class="new-game" value="Νέο παιχνίδι"></div>
+            </div>
+            </div>
+
+            <div id="my-country">
+                <div id="my-country-flag"></div>
+                <div id="my-country-name"></div>
+            </div>
+
+            <div id="progress"></div>
+
+            <div id="neighbours-panel"></div>
+
+            <div id="game-status"><div class="txt"></div></div>
+            
+            <div id="question">
+            <div id="msg">Σίγουρα; θα χάσετε ολο σας το σκόρ!</div>
+            <div class="btn-place">
+            <input type="button" id="no" class="btn" value="Cancel" onclick="question(0)">
+            <input type="button" id="yes" class="btn" value="OK" onclick="question(1)">
+            </div>
+            </div>
+    </div>
+</body>
+
+<script>
+//Το παρακάτω αφορά μόνο τους χρήστες macOS.
+if (navigator.appVersion.indexOf("Macintosh")>0){
+  document.body.style.fontFamily = '"Open Sans"';
+}
+</script>
+</html>
