@@ -1,6 +1,5 @@
-// Find the neighbours ver. 1.0, Mariosnb 2021
-// Final project: The flags of the world - Find the neighbours for Mathesis CS3.2: Advanced web development (https://mathesis.cup.gr/)
 // Τελική εργασία: Οι σημαίες του κόσμου - Βρες τους γείτονες, Mathesis ΗΥ3.2 Προχωρημένα θέματα ανάπτυξης ιστοσελίδων (https://mathesis.cup.gr/)
+// Final project: The flags of the world - Find the neighbours for Mathesis CS3.2: Advanced web development (https://mathesis.cup.gr/)
 
 //Final Beta 2
 // shuffle array https://medium.com/@nitinpatel_20236/how-to-shuffle-correctly-shuffle-an-array-in-javascript-15ea3f84bfb
@@ -31,8 +30,8 @@ function loadCountryNameFromCode(code) {
 }
 
 /*******************************************************************************/
-const urlFlags = "https://restcountries.eu/data/";
-const urlCode = "https://restcountries.eu/rest/v2/alpha/";
+const urlFlags = "https://countryflagsapi.com/svg/";    // New Api
+const urlCode = "https://restcountries.com/v2/alpha/";  // New Endpoint
 
 var countries =
     [{
@@ -53,7 +52,7 @@ function playGame() {
 
     var newCountry = shuffleArray(countryObjects);  // The random choice of the game
 
-    var flag = '<img src=' + urlFlags + newCountry[0].code3.toLowerCase() + '.svg style="height: 50px; width: 70px; box-shadow: 2px 2px 5px #A8A8A8;">';
+    var flag = '<img src=' + urlFlags + newCountry[0].code3.toLowerCase() + ' style="height: 50px; width: 70px; box-shadow: 2px 2px 5px #A8A8A8;">';
 
     document.querySelector("#my-country-flag").innerHTML = flag;
     document.querySelector("#my-country-name").innerHTML = newCountry[0].name;
@@ -81,35 +80,38 @@ function neighbours(countryCode) {
     fetch(urlCode+countryCode)
     .then((reply)=>{
         if (reply.status == 200)
-            return reply.json();
+        return reply.json();
         else throw new Error(reply.status);
-        })
+    })
     .then((reply)=> {
         if (reply.length<1)
-            throw new Error("country not found")
-        else
-            if(reply.borders.length >0)
-            {
-                var theNeighbours = [];
-                reply.borders.forEach(element => {
-                    theNeighbours.push(loadCountryNameFromCode(element));
-                });
-                Promise.all(theNeighbours)
-                .then((allCountryNames) => {
-                    countries[0].borderCodes.push(reply.borders);
-                    countries[0].borderNames.push(allCountryNames);
-                    nbFlags(countries[0]);
-                })
-            }
-            else
-            {
-                console.log("Η χώρα: " + reply.name + " δεν συνορεύει με κάποιον.")
+        throw new Error("country not found")
+        else if(typeof reply.borders === 'undefined')
+        {
+            console.log("Η χώρα: " + reply.name + " δεν συνορεύει με κάποιον.")
 
-                if(round>0)
-                playGame(); // It plays the game again because the country has no borders
-            }
-        });
-    }
+            if(round>0)
+            playGame(); // It plays the game again because the country has no borders
+        }
+        else if(reply.borders.length >0)
+        {
+            var theNeighbours = [];
+            reply.borders.forEach(element => {
+                theNeighbours.push(loadCountryNameFromCode(element));
+            });
+            Promise.all(theNeighbours)
+            .then((allCountryNames) => {
+                countries[0].borderCodes.push(reply.borders);
+                countries[0].borderNames.push(allCountryNames);
+                nbFlags(countries[0]);
+            })
+        }
+        else
+        {
+            alert("Sorry!! Unexpected error!! Contact with the developer.");
+        }
+    });
+}
 
     function nbFlags(neighborsData) {
         var tempCodes = neighborsData.borderCodes[0];
@@ -196,7 +198,7 @@ function neighbours(countryCode) {
         for(var i=0; i<countriesTempRandomArray.length; i++)
         {
             var para = document.createElement("DIV");
-            document.querySelector("#neighbours-panel").appendChild(para).innerHTML = '<img src=' + urlFlags + countriesTempRandomArray[i].code.toLowerCase() + '.svg class="'+countriesTempRandomArray[i].code.toUpperCase()+'"><br>' + countriesTempRandomArray[i].name;
+            document.querySelector("#neighbours-panel").appendChild(para).innerHTML = '<img src=' + urlFlags + countriesTempRandomArray[i].code.toLowerCase() + ' class="'+countriesTempRandomArray[i].code.toUpperCase()+'"><br>' + countriesTempRandomArray[i].name;
             para.className = countriesTempRandomArray[i].code + " flg";
         }
         const divs = document.querySelectorAll(".flg");
@@ -281,7 +283,7 @@ function neighbours(countryCode) {
         document.querySelector(".button").style.color = "black";
 
         gs.style.display = "block";
-        txt.innerHTML = "Τους βρήκατε όλους!";
+        txt.innerHTML = "You found them all!";
         txt.style.color = "black";
         
         nbp.style.pointerEvents = "none";
@@ -297,7 +299,7 @@ function neighbours(countryCode) {
         document.querySelector(".button").style.color = "black";
 
         gs.style.display = "block";
-        txt.innerHTML = "Κρίμα, χάσατε!";
+        txt.innerHTML = "You lost!";
         txt.style.color = "#8b0000";
         
         nbp.style.pointerEvents = "none";
@@ -322,7 +324,7 @@ function neighbours(countryCode) {
 
     function endGame(){
         gs.style.display = "block";
-        txt.innerHTML = "Τέλος παιχνιδιού";
+        txt.innerHTML = "Game Over!!";
         
         document.querySelector(".button").disabled = false;
         document.querySelector(".button").style.color = "lightgrey";
