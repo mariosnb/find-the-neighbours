@@ -1,6 +1,5 @@
-<!-- Find the neighbours ver. 1.0, Mariosnb 2021 -->
-<!-- Final project: The flags of the world - Find the neighbours for Mathesis CS3.2: Advanced web development (https://mathesis.cup.gr/) -->
 <!-- Τελική εργασία: Οι σημαίες του κόσμου - Βρες τους γείτονες, Mathesis ΗΥ3.2 Προχωρημένα θέματα ανάπτυξης ιστοσελίδων (https://mathesis.cup.gr/) -->
+<!-- Final project: The flags of the world - Find the neighbours for Mathesis CS3.2: Advanced web development (https://mathesis.cup.gr/) -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Βρες τους γείτονες</title>
+    <title>Find the neighbours</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
@@ -68,16 +67,16 @@
     <div class="game-panel">
             <div id="sidebar">
                 <div class="title">
-                <div class="title-1">Βρες τους γείτονες</div>
+                <div class="title-1">Find the neighbours</div>
                 <br>
-                <div class="info" style="opacity: 0.7;">Γύρος: <span class="round"></span></div>
-                <div class="info" style="opacity: 0.7;">Σκορ:&nbsp;&nbsp; <span class="score"></span></div>
+                <div class="info" style="opacity: 0.7;">Round: <span class="round"></span></div>
+                <div class="info" style="opacity: 0.7;">Score:&nbsp;&nbsp; <span class="score"></span></div>
                 <br>
                 </div>
 
                 <div class="bottom">
-                <div><input type="button" id="btn-next-round" class="button" value="Επόμενη χώρα" disabled></div>
-                <div><input type="button" id="btn-new-game" class="button2" class="new-game" value="Νέο παιχνίδι"></div>
+                <div><input type="button" id="btn-next-round" class="button" value="Next country" disabled></div>
+                <div><input type="button" id="btn-new-game" class="button2" class="new-game" value="New game"></div>
             </div>
             </div>
 
@@ -93,7 +92,7 @@
             <div id="game-status"><div class="txt"></div></div>
             
             <div id="question">
-            <div id="msg">Σίγουρα; θα χάσετε ολο σας το σκόρ!</div>
+            <div id="msg">For sure? You will lose all your score!</div>
             <div class="btn-place">
             <input type="button" id="no" class="btn" value="Cancel" onclick="question(0)">
             <input type="button" id="yes" class="btn" value="OK" onclick="question(1)">
