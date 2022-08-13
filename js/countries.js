@@ -1,5 +1,6 @@
-// Τελική εργασία: Οι σημαίες του κόσμου - Βρες τους γείτονες, Mathesis ΗΥ3.2 Προχωρημένα θέματα ανάπτυξης ιστοσελίδων (https://mathesis.cup.gr/)
+// Find the neighbours ver. 1.1, Mariosnb 2022
 // Final project: The flags of the world - Find the neighbours for Mathesis CS3.2: Advanced web development (https://mathesis.cup.gr/)
+// Τελική εργασία: Οι σημαίες του κόσμου - Βρες τους γείτονες, Mathesis ΗΥ3.2 Προχωρημένα θέματα ανάπτυξης ιστοσελίδων (https://mathesis.cup.gr/)
 
 //Final Beta 2
 // shuffle array https://medium.com/@nitinpatel_20236/how-to-shuffle-correctly-shuffle-an-array-in-javascript-15ea3f84bfb
