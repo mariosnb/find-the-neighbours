@@ -1,4 +1,4 @@
-// Find the neighbours ver. 1.1, Mariosnb 2022
+// Find the neighbours ver. 1.1.2  Mariosnb 2023
 // Final project: The flags of the world - Find the neighbours for Mathesis CS3.2: Advanced web development (https://mathesis.cup.gr/)
 // Τελική εργασία: Οι σημαίες του κόσμου - Βρες τους γείτονες, Mathesis ΗΥ3.2 Προχωρημένα θέματα ανάπτυξης ιστοσελίδων (https://mathesis.cup.gr/)
 
@@ -22,17 +22,20 @@ function loadCountryNameFromCode(code) {
         .then ((resp)=> {
             if (resp.status == 200) {
                 return resp.json();
-            } else reject(new Error(response.status))
+            } 
+			else reject(new Error(response.status))
         })
-        .then((data)=>{
-            resolve(data['name']);
+        .then((resp)=>{
+			if (resp.length < 1)
+			throw new Error("country not found")
+		else
+            resolve(resp['name']);
         })
     })
 }
-
 /*******************************************************************************/
-const urlFlags = "https://countryflagsapi.com/svg/";    // New Api
-const urlCode = "https://restcountries.com/v2/alpha/";  // New Endpoint
+const urlFlags = "https://flagcdn.com/w320/";
+const urlCode = "https://restcountries.com/v2/alpha/";
 
 var countries =
     [{
@@ -53,8 +56,8 @@ function playGame() {
 
     var newCountry = shuffleArray(countryObjects);  // The random choice of the game
 
-    var flag = '<img src=' + urlFlags + newCountry[0].code3.toLowerCase() + ' style="height: 50px; width: 70px; box-shadow: 2px 2px 5px #A8A8A8;">';
-
+    var flag = '<img src=' + urlFlags + codeConvert(newCountry[0].code3).toLowerCase() + '.png style="height: 50px; width: 70px; box-shadow: 2px 2px 5px #A8A8A8;">';
+    
     document.querySelector("#my-country-flag").innerHTML = flag;
     document.querySelector("#my-country-name").innerHTML = newCountry[0].name;
 
@@ -169,8 +172,8 @@ function neighbours(countryCode) {
             {
                 console.log(nbCountryAll);
             }
-            
         }
+        
         while(resultOfuniqueNeighbours.length>0 || array2Codes.includes(countryCode)==true);
         console.log(resultOfuniqueNeighbours.length>0);
         console.log(nbCountryAll);
@@ -199,7 +202,7 @@ function neighbours(countryCode) {
         for(var i=0; i<countriesTempRandomArray.length; i++)
         {
             var para = document.createElement("DIV");
-            document.querySelector("#neighbours-panel").appendChild(para).innerHTML = '<img src=' + urlFlags + countriesTempRandomArray[i].code.toLowerCase() + ' class="'+countriesTempRandomArray[i].code.toUpperCase()+'"><br>' + countriesTempRandomArray[i].name;
+            document.querySelector("#neighbours-panel").appendChild(para).innerHTML = '<img src=' + urlFlags + codeConvert(countriesTempRandomArray[i].code).toLowerCase() + '.png class="'+countriesTempRandomArray[i].code.toUpperCase()+'"><br>' + countriesTempRandomArray[i].name;
             para.className = countriesTempRandomArray[i].code + " flg";
         }
         const divs = document.querySelectorAll(".flg");
@@ -590,3 +593,9 @@ const countryObjects = [                                              // - this 
     { "code": "ZW", "code3": "ZWE", "name": "Zimbabwe", "number": "716" },
     { "code": "AX", "code3": "ALA", "name": "Åland Islands", "number": "248" }
 ];
+
+//Searches in the countryObjects for ISO 3166-1 - alpha-3 and finally uses the ISO 3166-1- alpha-2.
+function codeConvert(searchId) {
+	const searchObject = countryObjects.find((flag) => flag.code3 == searchId);
+	return searchObject.code;
+}
